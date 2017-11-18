@@ -1,34 +1,39 @@
 // background.js
 
-// chrome.runtime.onMessage.addListener(
-//     function(request, sender, sendResponse){
-//         switch(request.message){
-//             case 'import_clicked':
-//                 console.log($("#shipTo"));
-//                 //alert("import button clicked!");
+var background = {
 
-//         }
-//     });
+    address: {
+        name: "",
+        address1: "",
+        city: "",
+        state: "",
+        zipcode: "",
+        country: "",
+        phone: ""
+    },
 
+    init: function() {
 
-// Regex-pattern to check URLs against. 
-// https://postage.ebay.com/ws/*
-// It matches URLs like: http[s]://[...]stackoverflow.com[...]
-var urlRegex = /^https?:\/\/(?:[^./?#]+\.)?ebay\.com/;
+        chrome.runtime.onMessage.addListener(function(request, sender, sendResponse){
 
+            console.log("message received", request);
 
-// A function to use as callback
-function doStuffWithDom(domContent) {
-    console.log('I received the following DOM content:\n' + domContent);
-}
+            if(request.fn in background){
+                background[request.fn](request, sender, sendResponse);
+            }
 
-// When the browser-action button is clicked...
-chrome.browserAction.onClicked.addListener(function (tab) {
-    chrome.tabs.sendMessage(tab.id, {text: 'report_back'}, doStuffWithDom);
+        });
 
-    // ...check the URL of the active tab against our pattern and...
-    // if (urlRegex.test(tab.url)) {
-    //     // ...if it matches, send a message specifying a callback too
-    //     chrome.tabs.sendMessage(tab.id, {text: 'report_back'}, doStuffWithDom);
-    // }
-});
+    },
+
+    setAddress: function(request, sender, sendResponse) {
+        console.log("setting address", request.address);
+        this.address = request.address;
+    },
+
+    getAddress: function(request, sender, sendResponse) {
+        sendResponse(this.address);
+    }
+};
+
+background.init();
