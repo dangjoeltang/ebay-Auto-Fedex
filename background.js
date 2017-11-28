@@ -34,6 +34,7 @@ var background = {
     getAddress: function(request, sender, sendResponse) {
         sendResponse(this.address);
     }
+
 };
 
 background.init();

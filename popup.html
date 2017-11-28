@@ -6,23 +6,27 @@
     <script type="text/javascript" src="popup.js"></script>
 </head>
 <body>
-    <h1>Fedex Shipment Manager</h1>
-    <form>
-        <input type="text" id="name" name="name" placeholder="Name">
-        <input type="text" id="address1" name="address1" placeholder="Address Line 1">
-        <input type="text" id="address2" name="address2" placeholder="Address Line 2">
-        <input type="text" id="city" name="city" placeholder="City">
-        <input type="text" id="state" name="state" placeholder="State">
-        <input type="text" id="zipcode" name="zipcode" placeholder="Zipcode">
-        <input type="text" id="country" name="country" placeholder="Country">
-        <input type="text" id="phone" name="phone" placeholder="Phone #">
-    </form>
+    <div class="outer">
+        <h1>Fedex Shipment Manager</h1>        
+    </div>
+    <div class="outer">
+        <form>
+            <input type="text" id="name" name="name" placeholder="Name">
+            <input type="text" id="address1" name="address1" placeholder="Address Line 1">
+            <input type="text" id="address2" name="address2" placeholder="Address Line 2">
+            <input type="text" id="city" name="city" placeholder="City">
+            <input type="text" id="state" name="state" placeholder="State">
+            <input type="text" id="zipcode" name="zipcode" placeholder="Zipcode">
+            <input type="text" id="country" name="country" placeholder="Country">
+            <input type="text" id="phone" name="phone" placeholder="Phone #">
+        </form>    
+    </div>
+    
+    <div class="outer">
+        <div class="inner"><button id="import">Import</button></div>
+        <div class="inner"><button id="export">Fedex</button></div>
+        <div class="inner"><button id="fill">Fill Form</button></div>
+    </div>
 
-    <button id="import">Import Address</button>
-    <button id="export">Export Address</button>
-    <button id="fill">Fill Form</button>
-
-
-
-<!--     <script type="text/javascript" src="test.js"></script> -->
+</body>
 </html>

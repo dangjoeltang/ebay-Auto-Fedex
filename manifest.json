@@ -1,38 +1,23 @@
 {
-  // Required
   "manifest_version": 2,
-  "name": "auto-ebay-fedex",
+
+  "name": "Auto-ebay-Fedex",
   "version": "1.0.0",
 
-  // Recommended
-  "description": "This extension will allow the user to automatically import the shipping information on the ship item page of ebay to a Fedex Ship Manager and generate a label",
+  "description": "Allow user to automatically import the shipping information from ebay to Fedex Ship Manager",
 
-  // Pick one (or none)
   "browser_action": {
-      "default_title": "Fedex Ship Manager",      // optional; shown in tooltip
+      "default_title": "Fedex Ship Manager",
       "default_popup": "popup.html",
-          "default_icon": {                           // optional
-            "16": "images/icon.png",            // optional
-            "24": "images/icon.png",            // optional
-            "32": "images/icon.png"             // optional
+          "default_icon": {
+            "16": "images/fedex-ebay_16px.png",
+            "24": "images/fedex-ebay_24px.png",
+            "32": "images/fedex-ebay_32px.png"
           }
   },
 
-  // "content_scripts": [
-  //   {
-  //     "matches": [
-  //       "https://postage.ebay.com/ws/*",
-  //       "http://postage.ebay.com/ws/*",
-  //       "*://*.stackoverflow.com/*"
-  //     ],
-  //     "js": ["content.js"]
-  //   }
-  // ],
-
-  // Optional
   "author": "Qiaowei Tang",
   "background": {
-    // Recommended
     "scripts": ["background.js"]
   },
 

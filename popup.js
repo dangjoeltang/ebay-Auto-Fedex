@@ -1,5 +1,3 @@
-
-
 var console = chrome.extension.getBackgroundPage().console;
 
 var app = {
@@ -14,6 +12,7 @@ var app = {
 
         var importButton = document.getElementById("import");
         var exportButton = document.getElementById("export");
+        var fillButton = document.getElementById("fill");
 
         chrome.runtime.sendMessage({fn: "getAddress"}, function(response) {
             console.log("popup got response", response);
@@ -26,30 +25,9 @@ var app = {
             phone.value = response.phone;
         });
 
-
-        exportButton.addEventListener("click", function() {
-            console.log("button click", name.value);
-
-            chrome.runtime.sendMessage({fn: "setAddress", 
-                                        address: {
-                                            name: name.value,
-                                            address1: address1.value,
-                                            city: city.value,
-                                            state: state.value,
-                                            zipcode: zipcode.value,
-                                            country: country.value,
-                                            phone: phone.value
-                                        } 
-                                    });
-            
-
-            chrome.tabs.create({url: 'https://www.fedex.com/shipping/shipEntryAction.do'});
-
-        });
-
         importButton.addEventListener("click", function(){
             chrome.tabs.executeScript({
-                code: '(' + app["importDOM"] + ')();' //argument here is a string but function.toString() returns function's code
+                code: '(' + app["importDOM"] + ')();'
             }, function(results){
                 //Here we have just the innerHTML and not DOM structure
                 console.log('Popup script:')
@@ -64,11 +42,78 @@ var app = {
                 document.getElementById("country").value = results[0][5];
                 document.getElementById("phone").value = results[0][6];
 
+                chrome.runtime.sendMessage({fn: "setAddress", 
+                                            address: {
+                                                name: name.value,
+                                                address1: address1.value,
+                                                city: city.value,
+                                                state: state.value,
+                                                zipcode: zipcode.value,
+                                                country: country.value,
+                                                phone: phone.value
+                                            } 
+                                        });
+            });
+        });
+
+        exportButton.addEventListener("click", function() {
+            chrome.runtime.sendMessage({fn: "setAddress", 
+                                        address: {
+                                            name: name.value,
+                                            address1: address1.value,
+                                            city: city.value,
+                                            state: state.value,
+                                            zipcode: zipcode.value,
+                                            country: country.value,
+                                            phone: phone.value
+                                        } 
+                                    });
+            
+            chrome.tabs.create({url: 'https://www.fedex.com/shipping/shipEntryAction.do'}, function(tab){
+
+                var shipTo = {
+                    name: document.getElementById("name").value,
+                    address1: document.getElementById("address1").value,
+                    city: document.getElementById("city").value,
+                    state:document.getElementById("state").value,
+                    zipcode: document.getElementById("zipcode").value,
+                    country: document.getElementById("country").value,
+                    phone: document.getElementById("phone").value
+                };
+
+                chrome.tabs.executeScript({
+                    code: 'var shipTo = ' + JSON.stringify(shipTo)
+                }, function(){
+                    chrome.tabs.executeScript({file: 'injector.js'}, function(){
+                        console.log("Form filled!");
+                    });
+                });
+                
+
 
             });
+        });
 
 
 
+        fillButton.addEventListener("click", function(){
+            var shipTo = {
+                name: document.getElementById("name").value,
+                address1: document.getElementById("address1").value,
+                city: document.getElementById("city").value,
+                state:document.getElementById("state").value,
+                zipcode: document.getElementById("zipcode").value,
+                country: document.getElementById("country").value,
+                phone: document.getElementById("phone").value
+            };
+
+            chrome.tabs.executeScript({
+                code: 'var shipTo = ' + JSON.stringify(shipTo)
+            }, function(){
+                chrome.tabs.executeScript({file: 'injector.js'}, function(){
+                    console.log("Form filled!");
+                });
+            });
         });
     },
 
