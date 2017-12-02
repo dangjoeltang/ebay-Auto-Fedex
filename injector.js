@@ -1,5 +1,6 @@
 
 document.getElementById("toData.contactName").value = shipTo['name'];
+document.getElementById("toData.companyName").value = shipTo['address2'];
 document.getElementById("toData.addressLine1").value = shipTo['address1'];
 document.getElementById("toData.city").value = shipTo['city'];
 document.getElementById("toData.stateProvinceCode").value = shipTo['state'];

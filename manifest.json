@@ -1,13 +1,13 @@
 {
   "manifest_version": 2,
 
-  "name": "Auto-ebay-Fedex",
-  "version": "1.0.0",
+  "name": "Fedex Quickship",
+  "version": "1.1.0",
 
   "description": "Allow user to automatically import the shipping information from ebay to Fedex Ship Manager",
 
   "browser_action": {
-      "default_title": "Fedex Ship Manager",
+      "default_title": "Fedex Quickship",
       "default_popup": "popup.html",
           "default_icon": {
             "16": "images/fedex-ebay_16px.png",
@@ -21,5 +21,14 @@
     "scripts": ["background.js"]
   },
 
-  "permissions": ["activeTab", "tabs"]
+  "permissions": ["activeTab", "tabs"],
+
+  "content_scripts": [
+    {
+      "matches": ["https://www.fedex.com/shipping/shipEntryAction.do*"],
+      "js": ["content.js"],
+      "run_at": "document_end"
+    }
+  ]
+
 }
