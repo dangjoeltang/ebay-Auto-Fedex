@@ -25,7 +25,10 @@
 
   "content_scripts": [
     {
-      "matches": ["https://www.fedex.com/shipping/shipEntryAction.do*"],
+      "matches": [
+        "https://www.fedex.com/shipping/*",
+        "https://www.fedex.com/shipping/shipAction.do?method=doInitialize&utype=nulls"
+      ],
       "js": ["content.js"],
       "run_at": "document_end"
     }
